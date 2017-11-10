@@ -1,4 +1,10 @@
 // webpack.config.js
+let webpack = require('webpack');
+let path = require('path');
+
+function resolve (dir) {
+    return path.join(__dirname, dir);
+}
 
 module.exports = {
     // This is the "main" file which should include all other modules
@@ -9,7 +15,10 @@ module.exports = {
     },
     resolve: {
         alias: {
-            vue: 'vue/dist/vue.js'
+            //vue: 'vue/dist/vue.js',
+            components: path.resolve(__dirname, '/src/components'),
+            'vue$': 'vue/dist/vue.esm.js',
+            '@': resolve('src'),
         },
         extensions: ['*', '.js', '.vue', '.json']
     },
@@ -23,10 +32,8 @@ module.exports = {
                 loader: 'babel-loader',
                 // don't transform node_modules folder (which don't need to be compiled)
                 exclude: /(node_modules|bower_components)/,
-                options: {
-                    presets: [
-                        'es2015'
-                    ]
+                query: {
+                    presets: ['es2015']
                 }
             },
             {
@@ -41,5 +48,8 @@ module.exports = {
                 }
             }
         ]
-    }
+    },
+    plugins: [
+        //new webpack.HotModuleReplacementPlugin()
+    ]
 }

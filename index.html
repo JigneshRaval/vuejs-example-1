@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title> Vue and Webpack <3 </title>
+
+<head>
+  <title>Vue 2 and Webpack 3 Examples</title>
       <link rel="stylesheet" href="./src/assets/css/main.css" />
-  </head>
-  <body>
-    <!-- use a wrapper div since vue can't bind to the body directly -->
-    <div id="vue-app">
-      {{ message }}
-    </div>
-    <script type="application/javascript" src="bundle.js"></script>
-  </body>
+      <link rel="stylesheet" href="./src/assets/css/uikit.min.css" />
+</head>
+
+<body>
+  <!-- use a wrapper div since vue can't bind to the body directly -->
+  <vue-app>
+    {{ message }}
+  </vue-app>
+
+  <script type="application/javascript" src="./src/assets/js/uikit.min.js"></script>
+  <script type="application/javascript" src="bundle.js"></script>
+</body>
+
 </html>

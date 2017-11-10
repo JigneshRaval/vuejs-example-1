@@ -2,7 +2,7 @@
 
 import Vue from 'vue';
 import FormComponent from './components/FormComponent.vue';
-import MyTest1 from './components/mytest.vue';
+import HomeLoanCalculator from './components/home-loan-calculator/index.vue';
 
 new Vue({
     data: function () {
@@ -10,7 +10,7 @@ new Vue({
             message: 'Webpack and Vue setup'
         }
     },
-    el: '#vue-app',
-    template: '<MyTest1/>',
-    components: { MyTest1 },
+    el: 'vue-app',
+    template: '<HomeLoanCalculator/>',
+    components: { HomeLoanCalculator },
 });
