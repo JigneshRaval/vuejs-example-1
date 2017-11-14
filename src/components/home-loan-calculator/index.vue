@@ -5,35 +5,35 @@
 		<div class="uk-margin">
 			<label class="uk-form-label" for="form-amount-text">Amount</label>
 			<div class="uk-form-controls">
-				<input class="uk-input" id="form-amount-text" type="text" placeholder="Loan Amount" v-model="principalAmt" />
+				<input class="uk-input" id="form-amount-text" type="text" placeholder="Loan Amount" v-model="principalAmt" pattern="[0-9]" required v-on:keyup.tab="keyUpExample" v-on:keyup.enter="keyUpExample" />
 			</div>
 		</div>
 		<div class="uk-margin">
 			<label class="uk-form-label" for="form-duration-text">Duration (years)</label>
 			<div class="uk-form-controls">
-				<input class="uk-input" id="form-duration-text" type="number" placeholder="Loan Amount" v-model="duration" />
+				<input class="uk-input" id="form-duration-text" type="number" placeholder="Loan Amount" v-model="duration" required />
 			</div>
 		</div>
 		<div class="uk-margin">
 			<label class="uk-form-label" for="form-roi-text">Rate of Interest (%)</label>
 			<div class="uk-form-controls">
-				<input class="uk-input" id="form-roi-text" type="number" placeholder="Loan Amount" v-model="roi" />
+				<input class="uk-input" id="form-roi-text" type="number" placeholder="Loan Amount" v-model="roi" value="0" required />
 			</div>
 		</div>
 		<div class="uk-margin">
 			<label class="uk-form-label" for="form-emi-text">EMI Calculated</label>
 			<div class="uk-form-controls">
-				<input class="uk-input" id="form-emi-text" type="number" placeholder="Loan Amount" v-model="emi" />
+				<input class="uk-input" id="form-emi-text" type="text" placeholder="Loan Amount" v-model="emi" readonly disabled/>
 			</div>
 		</div>
 		<div class="uk-margin">
 			<label class="uk-form-label" for="form-interestPaid-text">Total Interest</label>
 			<div class="uk-form-controls">
-				<input class="uk-input" id="form-interestPaid-text" type="number" placeholder="Loan Amount" v-model="interestPaid" />
+				<input class="uk-input" id="form-interestPaid-text" type="text" placeholder="Loan Amount" v-model="interestPaid" readonly disabled />
 			</div>
 		</div>
 		<div class="uk-margin">
-			<button class="uk-button uk-button-primary" @click="emi = principalAmt * (roi / 12 / 100) * Math.pow(1 + (roi / 12 / 100), (duration * 12)) / (Math.pow(1 + (roi / 12 / 100), (duration * 12)) - 1);interestPaid = 100">Calculate</button>
+			<button class="uk-button uk-button-primary" @click="calculateHomeLoanEMI">Calculate</button>
 		</div>
 		<div class="uk-card uk-card-default uk-card-body">
 			<h3 class="uk-card-title">Home loan calculator formula</h3>
@@ -54,30 +54,42 @@
 </template>
 
 <script type="text/javascript">
+import UIkit from "uikit";
+import { EventBus } from "../../event-bus";
+
 export default {
   data() {
     return {
       principalAmt: 100000,
-      duration: 1,
-      roi: 10,
-	  emi: 0,
-	  interestPaid : 0
+      duration: 1, // In Years
+      roi: 10, // In Percentage
+      emi: 0,
+      interestPaid: 0
     };
   },
   methods: {
-    /*calculateHomeLoanEMI() {
-      let amt = 0;
-      let interestPerMonth = this.roi / 12 / 100;
-      let durationInMonth = this.duration * 12;
-      amt =
-        this.principalAmt *
-        interestPerMonth *
-        Math.pow(1 + interestPerMonth, durationInMonth) /
-        (Math.pow(1 + interestPerMonth, durationInMonth) - 1);
-      // 100000*0.00833* Math.pow((1 + 0.00833), 12) /(Math.pow((1 + 0.00833), 12) - 1)
-      this.emi = amt;
-      console.log(amt, interestPerMonth);
-    }*/
+    calculateHomeLoanEMI() {
+      if (this.principalAmt && this.roi && this.duration) {
+        this.emi =
+          this.principalAmt *
+          (this.roi / 12 / 100) *
+          Math.pow(1 + this.roi / 12 / 100, this.duration * 12) /
+          (Math.pow(1 + this.roi / 12 / 100, this.duration * 12) - 1);
+
+        // Send the event on a channel (i-got-clicked) with a payload (the click count.)
+        EventBus.$emit("i-got-clicked", this.emi);
+      } else {
+        // components can be called from the imported UIkit reference
+        UIkit.notification({
+          message: "Please provide all the values properly.",
+          status: "danger"
+        });
+        return;
+      }
+		},
+		keyUpExample(event) {
+			console.log(`You pressed ${event.key} key`);
+		}
   }
 };
 </script>

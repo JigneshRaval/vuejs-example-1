@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <h1 class="ui dividing centered header">Vue.js Todo App</h1>
+  <div class="uk-card uk-card-default uk-card-body" id="todo-app">
+    <h2 class="ui dividing centered header">Example 3 : Vue.js Todo App</h2>
     <div class='ui three column centered grid'>
       <div class='column'>
         <todo-list v-bind:todos="todos"></todo-list>
@@ -15,7 +15,7 @@
 import TodoList from "./TodoList";
 import CreateTodo from "./CreateTodo";
 export default {
-  name: "app",
+  name: "todo-app",
   components: {
     TodoList,
     CreateTodo

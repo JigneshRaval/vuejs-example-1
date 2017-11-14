@@ -4,11 +4,13 @@ import Vue from 'vue';
 import UIkit from 'uikit';
 import Icons from 'uikit/dist/js/uikit-icons';
 
-import FormComponent from './components/FormComponent.vue';
-import HomeLoanCalculator from './components/home-loan-calculator/index.vue';
-
 // loads the Icon plugin
 UIkit.use(Icons);
+
+import App from './app.vue';
+import UppercaseFilter from './filters/uppercase.filter';
+
+Vue.use(UppercaseFilter);
 
 new Vue({
     data: function () {
@@ -17,6 +19,8 @@ new Vue({
         }
     },
     el: 'vue-app',
-    template: '<HomeLoanCalculator/>',
-    components: { HomeLoanCalculator },
+    template: '<App/>',
+    components: {
+        App
+    },
 });

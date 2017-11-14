@@ -41,6 +41,11 @@ export default {
 </script>
 
 <style scoped>
+div {
+  border: 1px solid #CCC;
+  margin-bottom: 1em;
+  padding: 1em;
+}
 p.tasks {
   text-align: center;
 }
