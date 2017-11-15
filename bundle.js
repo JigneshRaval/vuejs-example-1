@@ -21554,7 +21554,7 @@ var _vue2 = _interopRequireDefault(_vue);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var EventBus = exports.EventBus = new _vue2.default();
+var EventBus = exports.EventBus = new _vue2.default(); // Event Bus Example for data passing between various components
 
 /***/ }),
 /* 7 */
@@ -21579,17 +21579,33 @@ var _app = __webpack_require__(10);
 
 var _app2 = _interopRequireDefault(_app);
 
-var _uppercase = __webpack_require__(42);
+var _index = __webpack_require__(42);
 
-var _uppercase2 = _interopRequireDefault(_uppercase);
+var filters = _interopRequireWildcard(_index);
+
+__webpack_require__(45);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// loads the Icon plugin
-_uikit2.default.use(_uikitIcons2.default); // main.js
+// loads UIkit Icon plugin
+_uikit2.default.use(_uikitIcons2.default);
 
-_vue2.default.use(_uppercase2.default);
+// Main App
+// main.js
+// =====================
 
+// Filters : Example 1
+
+
+_vue2.default.use(filters.uppercase);
+_vue2.default.use(filters.lowercase);
+
+// Filters : Example 2
+
+
+// Bind Vue app with HTML
 new _vue2.default({
     data: function data() {
         return {
@@ -22146,6 +22162,13 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -22165,9 +22188,9 @@ if (false) {(function () {
     TodoApp: __WEBPACK_IMPORTED_MODULE_2__components_Todo_scotch_io_index_vue__["a" /* default */],
     ParentCompoent: __WEBPACK_IMPORTED_MODULE_3__components_data_passing_parent_component_vue__["a" /* default */]
   },
-  data() {
+  data: function data() {
     return {
-      firstName: "jignesh"
+      firstName: "Jignesh"
     };
   }
 });
@@ -22292,7 +22315,7 @@ if (false) {(function () {
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-  data() {
+  data: function data() {
     return {
       principalAmt: 100000,
       duration: 1, // In Years
@@ -22301,8 +22324,9 @@ if (false) {(function () {
       interestPaid: 0
     };
   },
+
   methods: {
-    calculateHomeLoanEMI() {
+    calculateHomeLoanEMI: function calculateHomeLoanEMI() {
       if (this.principalAmt && this.roi && this.duration) {
         this.emi = this.principalAmt * (this.roi / 12 / 100) * Math.pow(1 + this.roi / 12 / 100, this.duration * 12) / (Math.pow(1 + this.roi / 12 / 100, this.duration * 12) - 1);
 
@@ -22317,8 +22341,8 @@ if (false) {(function () {
         return;
       }
     },
-    keyUpExample(event) {
-      console.log(`You pressed ${event.key} key`);
+    keyUpExample: function keyUpExample(event) {
+      console.log("You pressed " + event.key + " key");
     }
   }
 });
@@ -22700,18 +22724,21 @@ if (false) {(function () {
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: "emi-result",
-  data() {
+  data: function data() {
     return {
       emiCalculated: 0
     };
   },
+
   methods: {
-    updateEmi() {}
+    updateEmi: function updateEmi() {}
   },
-  created() {
+  created: function created() {
+    var _this = this;
+
     // Listen for the i-got-clicked event and its payload.
-    __WEBPACK_IMPORTED_MODULE_0__event_bus__["EventBus"].$on("i-got-clicked", emi => {
-      this.emiCalculated = emi;
+    __WEBPACK_IMPORTED_MODULE_0__event_bus__["EventBus"].$on("i-got-clicked", function (emi) {
+      _this.emiCalculated = emi;
     });
   }
 });
@@ -22820,7 +22847,7 @@ if (false) {(function () {
     TodoList: __WEBPACK_IMPORTED_MODULE_0__TodoList__["a" /* default */],
     CreateTodo: __WEBPACK_IMPORTED_MODULE_1__CreateTodo__["a" /* default */]
   },
-  data() {
+  data: function data() {
     return {
       todos: [{
         title: "Todo A",
@@ -22841,13 +22868,14 @@ if (false) {(function () {
       }]
     };
   },
+
   methods: {
-    createTodo(newTodo) {
+    createTodo: function createTodo(newTodo) {
       this.todos.push(newTodo);
       this.getData();
       //sweetalert('Success!', 'To-Do created!', 'success');
     },
-    getData() {
+    getData: function getData() {
       // url (required), options (optional)
       fetch("https://api.coinmarketcap.com//v1/ticker/?limit=10", {
         method: "get"
@@ -23318,7 +23346,9 @@ module.exports = function listToStyles (parentId, list) {
     Todo: __WEBPACK_IMPORTED_MODULE_0__Todo__["a" /* default */]
   },
   methods: {
-    deleteTodo(todo) {
+    deleteTodo: function deleteTodo(todo) {
+      var _this = this;
+
       /*sweetalert({
         title: 'Are you sure?',
         text: 'This To-Do will be permanently deleted!',
@@ -23328,14 +23358,14 @@ module.exports = function listToStyles (parentId, list) {
         confirmButtonText: 'Yes, delete it!',
         closeOnConfirm: false,
       },*/
-      () => {
-        const todoIndex = this.todos.indexOf(todo);
-        this.todos.splice(todoIndex, 1);
+      (function () {
+        var todoIndex = _this.todos.indexOf(todo);
+        _this.todos.splice(todoIndex, 1);
         //sweetalert('Deleted!', 'Your To-Do has been deleted.', 'success');
-      };
+      });
     },
-    completeTodo(todo) {
-      const todoIndex = this.todos.indexOf(todo);
+    completeTodo: function completeTodo(todo) {
+      var todoIndex = this.todos.indexOf(todo);
       this.todos[todoIndex].done = true;
       //sweetalert('Success!', 'To-Do completed!', 'success');
     }
@@ -23445,22 +23475,23 @@ if (false) {(function () {
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   props: ['todo'],
-  data() {
+  data: function data() {
     return {
       isEditing: false
     };
   },
+
   methods: {
-    completeTodo(todo) {
+    completeTodo: function completeTodo(todo) {
       this.$emit('complete-todo', todo);
     },
-    deleteTodo(todo) {
+    deleteTodo: function deleteTodo(todo) {
       this.$emit('delete-todo', todo);
     },
-    showForm() {
+    showForm: function showForm() {
       this.isEditing = true;
     },
-    hideForm() {
+    hideForm: function hideForm() {
       this.isEditing = false;
     }
   }
@@ -23802,27 +23833,28 @@ if (false) {(function () {
 //
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-  data() {
+  data: function data() {
     return {
       titleText: '',
       projectText: '',
       isCreating: false
     };
   },
+
   methods: {
-    openForm() {
+    openForm: function openForm() {
       this.isCreating = true;
     },
-    closeForm() {
+    closeForm: function closeForm() {
       this.isCreating = false;
     },
-    sendForm() {
+    sendForm: function sendForm() {
       if (this.titleText.length > 0 && this.projectText.length > 0) {
-        const title = this.titleText;
-        const project = this.projectText;
+        var title = this.titleText;
+        var project = this.projectText;
         this.$emit('create-todo', {
-          title,
-          project,
+          title: title,
+          project: project,
           done: false
         });
         this.titleText = '';
@@ -24085,14 +24117,15 @@ if (false) {(function () {
   components: {
     ChildComponent1: __WEBPACK_IMPORTED_MODULE_0__child_component_vue__["a" /* default */]
   },
-  data() {
+  data: function data() {
     return {
       total: 0,
       disableDecrementButton: true
     };
   },
+
   methods: {
-    incrementTotal() {
+    incrementTotal: function incrementTotal() {
       this.total += 1;
     }
   }
@@ -24167,26 +24200,27 @@ if (false) {(function () {
 
 /* harmony default export */ __webpack_exports__["a"] = ({
 	props: ['dataFromParent'],
-	data() {
+	data: function data() {
 		return {
 			counter: 0,
 			disableDecrementButton: false
 		};
 	},
+
 	methods: {
-		incrementCounter() {
+		incrementCounter: function incrementCounter() {
 			this.counter += 1;
 			this.$emit("increment");
 			this.disableDecrementButton = false;
 		},
-		decrementCounter() {
+		decrementCounter: function decrementCounter() {
 			this.counter -= 1;
 			if (this.counter === 0) {
 				this.disableDecrementButton = true;
 			}
 		}
 	},
-	created: function () {
+	created: function created() {
 		this.disableDecrementButton = true;
 	}
 });
@@ -24293,9 +24327,32 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._v(
-      "\n    " + _vm._s(_vm._f("UppercaseFilter")(_vm.firstName)) + "\n    "
+    _c(
+      "div",
+      { staticClass: "uk-container uk-container-small uk-position-relative" },
+      [
+        _c("h3", [_vm._v("Filters")]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v("uppercase : " + _vm._s(_vm._f("uppercase")(_vm.firstName)))
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v("Lowercase : " + _vm._s(_vm._f("lowercase")(_vm.firstName)))
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "first4Chars : " + _vm._s(_vm._f("first4Chars")(_vm.firstName))
+          )
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v("last4Chars : " + _vm._s(_vm._f("last4Chars")(_vm.firstName)))
+        ])
+      ]
     ),
+    _vm._v(" "),
     _c(
       "div",
       { staticClass: "uk-container uk-container-small uk-position-relative" },
@@ -24343,14 +24400,80 @@ if (false) {
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.lowercase = exports.uppercase = undefined;
+
+var _uppercase = __webpack_require__(43);
+
+var _uppercase2 = _interopRequireDefault(_uppercase);
+
+var _lowercase = __webpack_require__(44);
+
+var _lowercase2 = _interopRequireDefault(_lowercase);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.uppercase = _uppercase2.default;
+exports.lowercase = _lowercase2.default;
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _vue = __webpack_require__(1);
 
 var _vue2 = _interopRequireDefault(_vue);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_vue2.default.filter('uppercase', function (value) {
-    return value.toUpperCase();
+_vue2.default.filter('uppercase', function (str) {
+  return str.toUpperCase();
+});
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _vue = __webpack_require__(1);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_vue2.default.filter('lowercase', function (str) {
+  return str.toLowerCase();
+});
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _vue = __webpack_require__(1);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_vue2.default.filter("first4Chars", function (str) {
+  return str.substring(0, 4);
+}); // Example of defining filters in single file for global use
+// Import this file in main.js like "import './filters/filters';"
+// Use it like "first4Chars : {{ firstName | first4Chars }}"
+// Source : https://codesandbox.io/s/mqwv333zr8, https://stackoverflow.com/questions/47004702/how-to-add-a-bunch-of-global-filters-in-vue-js
+
+_vue2.default.filter("last4Chars", function (str) {
+  return str.substring(str.length - 4);
 });
 
 /***/ })

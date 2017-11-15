@@ -1,5 +1,3 @@
 import Vue from 'vue';
 
-Vue.filter('uppercase', function (value) {
-    return value.toUpperCase();
-})
+Vue.filter('uppercase', str => str.toUpperCase());

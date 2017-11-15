@@ -1,6 +1,7 @@
 // webpack.config.js
 let webpack = require('webpack');
 let path = require('path');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 function resolve (dir) {
     return path.join(__dirname, dir);
@@ -51,5 +52,8 @@ module.exports = {
     },
     plugins: [
         //new webpack.HotModuleReplacementPlugin()
+        /*new UglifyJSPlugin({
+            sourceMap: true
+        });*/
     ]
 }

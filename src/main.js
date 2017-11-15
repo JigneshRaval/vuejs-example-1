@@ -1,17 +1,26 @@
 // main.js
+// =====================
 
 import Vue from 'vue';
 import UIkit from 'uikit';
 import Icons from 'uikit/dist/js/uikit-icons';
 
-// loads the Icon plugin
+// loads UIkit Icon plugin
 UIkit.use(Icons);
 
+// Main App
 import App from './app.vue';
-import UppercaseFilter from './filters/uppercase.filter';
 
-Vue.use(UppercaseFilter);
+// Filters : Example 1
+import * as filters from './filters/index.filters';
 
+Vue.use(filters.uppercase);
+Vue.use(filters.lowercase);
+
+// Filters : Example 2
+import './filters/filters';
+
+// Bind Vue app with HTML
 new Vue({
     data: function () {
         return {

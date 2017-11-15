@@ -1,6 +1,13 @@
 <template>
     <div>
-        {{firstName | UppercaseFilter}}
+        <div class="uk-container uk-container-small uk-position-relative">
+            <h3>Filters</h3>
+            <p>uppercase : {{ firstName | uppercase }}</p>
+            <p>Lowercase : {{ firstName | lowercase }}</p>
+            <p>first4Chars : {{ firstName | first4Chars }}</p>
+            <p>last4Chars : {{ firstName | last4Chars }}</p>
+        </div>
+        
         <div class="uk-container uk-container-small uk-position-relative">
             <home-loan-calculator></home-loan-calculator>
         </div>
@@ -41,7 +48,7 @@ export default {
   },
   data() {
       return {
-          firstName : "jignesh"
+          firstName : "Jignesh"
       }
   }
 };

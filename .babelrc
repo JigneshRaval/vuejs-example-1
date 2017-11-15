@@ -1,0 +1,11 @@
+{
+  "presets": [
+    "es2015-native-modules",
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions", "safari >= 7"]
+      },
+      "modules": false
+    }]
+  ]
+}
