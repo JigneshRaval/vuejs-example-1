@@ -25652,11 +25652,28 @@ Object.defineProperty(exports, "__esModule", {
 });
 var VUEX_TODO_STORE = exports.VUEX_TODO_STORE = {
     state: {
+        id: 5,
         todos: [{ id: 1, task: 'First task', completed: true }, { id: 2, task: 'Second task', completed: true }, { id: 3, task: 'Third task', completed: false }]
     },
     getters: {
         todos: function todos(state) {
             return state.todos;
+        }
+    },
+    mutations: {
+        storeAddTodo: function storeAddTodo(state, payload) {
+
+            // Create task object
+            var task = {
+                id: state.id,
+                task: payload,
+                completed: false
+
+                // Add task object to existing state.todos array
+            };state.todos.unshift(task);
+        },
+        storeUpdateTodoCount: function storeUpdateTodoCount(state) {
+            return state.todos.length;
         }
     }
 };
@@ -25731,18 +25748,37 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    components: {
-        TodoList: __WEBPACK_IMPORTED_MODULE_1__todo_list_component_vue__["a" /* default */]
-    },
-    computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])(['todos']), // https://medium.com/codingthesmartway-com-blog/vue-js-2-state-management-with-vuex-introduction-db26cb495113
-    created: function created() {
-        console.log(this.$store.state.todostoremodule);
+  data: function data() {
+    return {
+      newtask: ""
+    };
+  },
+
+  // https://medium.com/codingthesmartway-com-blog/vue-js-2-state-management-with-vuex-introduction-db26cb495113
+  computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])(["todos"]),
+  components: {
+    TodoList: __WEBPACK_IMPORTED_MODULE_1__todo_list_component_vue__["a" /* default */]
+  },
+
+  methods: {
+    addTodo: function addTodo() {
+      // Commit to mutation
+      this.$store.commit("storeAddTodo", this.newtask);
+
+      // Empty text input
+      this.newtask = "";
+
+      console.log("TEst :", this.$store.state.VUEX_TODO_STORE.todos.length);
     }
+  }
 });
 
 /***/ }),
@@ -25811,7 +25847,8 @@ if (false) {(function () {
 //
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    prop: ['todos'],
+    props: ['todos'],
+    computed: {},
     data: function data() {
         return {};
     },
@@ -25834,12 +25871,7 @@ var render = function() {
       _vm._l(_vm.todos, function(todo) {
         return _c(
           "li",
-          _vm._b(
-            { class: { completed: todo.completed } },
-            "li",
-            todo.id,
-            false
-          ),
+          { key: todo.id, class: { completed: todo.completed } },
           [_vm._v(_vm._s(todo.task))]
         )
       })
@@ -25869,7 +25901,46 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("p", [_vm._v(_vm._s(_vm.todos))]),
+      _c("p", [
+        _vm._v(
+          "Total Tasks added : " +
+            _vm._s(this.$store.state.VUEX_TODO_STORE.todos.length)
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              _vm.addTodo($event)
+            }
+          }
+        },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.newtask,
+                expression: "newtask"
+              }
+            ],
+            attrs: { type: "text", placeholder: "Please enter task name" },
+            domProps: { value: _vm.newtask },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.newtask = $event.target.value
+              }
+            }
+          })
+        ]
+      ),
       _vm._v(" "),
       _c("todo-list", { attrs: { todos: _vm.todos } })
     ],
