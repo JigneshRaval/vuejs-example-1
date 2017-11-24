@@ -33,20 +33,20 @@
 </template>
 <script>
 export default {
-  data: function(){
+  data: function() {
     return {
-      item: '',
+      item: "",
       items: []
-    }
+    };
   },
   methods: {
-    addItems(){
-      this.items.push({message: document.querySelector('input').value});
-      this.item = '';
+    addItems() {
+      this.items.push({ message: document.querySelector("input").value });
+      this.item = "";
     },
-    deleteData(index){
+    deleteData(index) {
       this.items.splice(index, 1);
     }
   }
-}
+};
 </script>
